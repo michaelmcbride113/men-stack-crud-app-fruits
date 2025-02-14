@@ -25,11 +25,19 @@ app.get('/', async (requestAnimationFrame, res) => {
     res.render("index.ejs");
 });
 
+// GET /fruits
+app.get("/fruits", async (req, res) => {
+    const allFruits = await Fruit.find();
+    console.log(allFruits)
+    res.render("friuts/index.ejs", { fruits: allFruits});
+  });
+
 // Get /fruits/new
 app.get('/fruits/new', (req, res) => {
     res.render("new.ejs");
 });
 
+  
 
 // POST /fruits - uses async because it is a database action
 // used .body here because isReadyToEat is located in the 
@@ -42,7 +50,7 @@ app.post('/fruits', async (req, res) => {
     } 
     
     await Fruit.create(req.body);
-    res.redirect('/fruits/new'); // this makes browser refresh and we will see the response in the terminal
+    res.redirect('/fruits'); // this redirects to the /fruits page after submitting a fruit on fruits/new
 })
   
 
