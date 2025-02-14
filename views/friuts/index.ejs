@@ -9,15 +9,24 @@
   </head>
 <!-- views/fruits/index.ejs -->
 <!-- below renders the fruits from fruit/new on the page -->
+<!-- views/fruits/index.ejs -->
+
+<!-- views/fruits/index.ejs -->
+
 <body>
-    <a href="/fruits/new">Enter a new fruit</a>
+    <a href="/fruits/new">Add a new fruit</a>
+
     <h1>All Fruits</h1>
     <ul>
       <% fruits.forEach(fruit => { %>
-        <li><%= fruit.name %></li>
+        <li>
+          <a href="/fruits/<%= fruit._id %>"> <%= fruit.name %> </a>
+        </li>
       <% }); %>
     </ul>
   </body>
+  
+  
   
   
 </html>
