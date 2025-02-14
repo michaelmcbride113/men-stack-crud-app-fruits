@@ -15,17 +15,36 @@ mongoose.connection.on('connected', () => {
 
 const Fruit = require('./models/fruit.js')
 
+// middleware
+app.use(express.urlencoded({ extended: false }));
+
+
 
 // Get /
 app.get('/', async (requestAnimationFrame, res) => {
     res.render("index.ejs");
 });
 
+// Get /fruits/new
 app.get('/fruits/new', (req, res) => {
-    res.render("fruits/new.ejs");
-    res.send('this route sends the user a form page!')
+    res.render("new.ejs");
 });
 
+
+// POST /fruits - uses async because it is a database action
+// used .body here because isReadyToEat is located in the 
+// body section of the HTML in the ejs
+app.post('/fruits', async (req, res) => {
+    if (req.body.isReadyToEat === 'on') {
+        req.body.isReadyToEat = true;
+    } else {
+        req.body.isReadyToEat = false;
+    } 
+    
+    await Fruit.create(req.body);
+    res.redirect('/fruits/new'); // this makes browser refresh and we will see the response in the terminal
+})
+  
 
 app.listen(3000, () => {
   console.log('Listening on port 3000');
